@@ -12,9 +12,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+        button.backgroundColor = .red
+        self.view.addSubview(button)
+        button.addTarget(self, action: #selector(runTest), for: .touchUpInside)
     }
-
-
+    
+    
+    @objc private func runTest() {
+        TreeNodeTest()
+    }
 }
 

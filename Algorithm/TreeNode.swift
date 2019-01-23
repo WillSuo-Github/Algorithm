@@ -160,6 +160,55 @@ class TreeNode {
         }
         return result
     }
+    
+    
+    func sequenceTraversal(root: TreeNode?) -> [Int] {
+        if let node = root {
+            return _sequenceTraversal(treeNodes: [node])
+        }
+        return [Int]()
+    }
+    
+    func _sequenceTraversal(treeNodes: [TreeNode]) -> [Int] {
+        var result = [Int]()
+        var nextTrees = [TreeNode]()
+        
+        for node in treeNodes {
+            result.append(node.val)
+            if let left = node.left {
+                nextTrees.append(left)
+            }
+            if let right = node.right {
+                nextTrees.append(right)
+            }
+        }
+        if nextTrees.count > 0 {
+            result.append(contentsOf: _sequenceTraversal(treeNodes: nextTrees))
+        }
+        return result
+    }
+    
+    
+    func sequenceTraversal2(root: TreeNode?) -> [Int] {
+        
+        var result = [Int]()
+        var stack = [TreeNode]()
+        if let node = root {
+            stack.append(node)
+        }
+        
+        while stack.count > 0 {
+            let node = stack.removeFirst()
+            result.append(node.val)
+            if let left = node.left {
+                stack.append(left)
+            }
+            if let right = node.right {
+                stack.append(right)
+            }
+        }
+        return result
+    }
 }
 
 class TreeNodeTest {
@@ -180,6 +229,6 @@ class TreeNodeTest {
         rootNode.left = node2
         rootNode.right = node3
         
-        print(rootNode.backTraversal2(root: rootNode))
+        print(rootNode.sequenceTraversal2(root: rootNode))
     }
 }

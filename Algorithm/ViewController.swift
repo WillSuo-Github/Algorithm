@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     
     @objc private func runTest() {
-        TreeNodeTest()
+        SortTest()
     }
 }
 

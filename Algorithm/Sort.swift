@@ -17,11 +17,16 @@ struct SortTest {
     
     func mergeSort(array: [[Int]]) -> [[Int]] {
         
-        if array.count > 1 {
-            
+        var tmp = array
+        var result = [[Int]]()
+        while tmp.count > 1 {
+            let r = mergeArr(array: tmp.removeFirst(), otherArray: tmp.removeFirst())
+            result.append(r)
         }
-        
-        
+        if result.count == 1 {
+            return result
+        }
+        return mergeSort(array: result)
     }
     
     func mergeArr(array: [Int], otherArray: [Int]) -> [Int] {
@@ -32,11 +37,24 @@ struct SortTest {
             return a
         }
         var result = [Int]()
-        for i in 0..<a.count {
-            if a[i] < b[i] {
-                result.append(a[i])
+        while a.count != 0 || b.count != 0 {
+            if a.count == 0 {
+                result.append(contentsOf: b)
+                break
+            }
+            
+            if b.count == 0 {
+                result.append(contentsOf: a)
+                break
+            }
+            
+            let aFirst = a.first!
+            let bFirst = b.first!
+            
+            if aFirst < bFirst {
+                result.append(a.removeFirst())
             }else {
-                result.append(b[i])
+                result.append(b.removeFirst())
             }
         }
         return result

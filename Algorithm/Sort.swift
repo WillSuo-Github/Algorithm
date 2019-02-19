@@ -11,8 +11,47 @@ import Foundation
 struct SortTest {
     init() {
         let arr = [6, 5, 3, 1, 8, 7, 2, 4]
-        let result = mergeSort(array: arr.map{[$0]})
-        print(result.first)
+        bookMergeSort(arr)
+    }
+    
+    func bookMergeSort(_ array: [Int]) -> [Int] {
+        var helper = Array(repeating: 0, count: array.count), array = array
+        mergeSort(&array, &helper, 0, array.count - 1)
+        return array
+    }
+    
+    func mergeSort(_ array: inout [Int], _ helper: inout [Int], _ low: Int, _ high: Int) {
+        guard low < high else {
+            return
+        }
+        
+        let middle = (high - low) / 2 + low
+        mergeSort(&array, &helper, low, middle)
+        print("\(array)" + "1" + "\(helper)")
+        mergeSort(&array, &helper, middle + 1, high)
+        print("\(array)" + "2" + "\(helper)")
+        
+    }
+    
+    func merge(_ array: inout [Int], _ helper: inout [Int], _ low: Int, _ middle: Int, _ high: Int) {
+        for i in low...high {
+            helper[i] = array[i];
+        }
+        
+        var  helperLeft = low, helperRight = middle + 1, current = low
+        
+        while helperLeft <= middle && helperRight <= high {
+            if helper[helperLeft] <= helper[helperRight] {
+                array[current] = helper[helperLeft]
+                helperLeft += 1
+            } else {
+                array[current] = helper[helperRight]
+                helperRight += 1
+            }
+            current += 1
+        }
+        
+        
     }
     
     func mergeSort(array: [[Int]]) -> [[Int]] {

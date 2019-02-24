@@ -11,7 +11,7 @@ import Foundation
 struct SortTest {
     init() {
         let arr = [6, 5, 3, 1, 8, 7, 2, 4]
-        bookMergeSort(arr)
+        print(bookMergeSort(arr))
     }
     
     func bookMergeSort(_ array: [Int]) -> [Int] {
@@ -27,10 +27,8 @@ struct SortTest {
         
         let middle = (high - low) / 2 + low
         mergeSort(&array, &helper, low, middle)
-        print("\(array)" + "1" + "\(helper)")
         mergeSort(&array, &helper, middle + 1, high)
-        print("\(array)" + "2" + "\(helper)")
-        
+        merge(&array, &helper, low, middle, high)
     }
     
     func merge(_ array: inout [Int], _ helper: inout [Int], _ low: Int, _ middle: Int, _ high: Int) {
@@ -51,7 +49,13 @@ struct SortTest {
             current += 1
         }
         
+        guard middle - helperLeft >= 0 else {
+            return
+        }
         
+        for i in 0...middle - helperLeft {
+            array[current + i] = helper[helperLeft + i]
+        }
     }
     
     func mergeSort(array: [[Int]]) -> [[Int]] {
